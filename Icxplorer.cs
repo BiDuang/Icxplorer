@@ -41,20 +41,11 @@ namespace Icxplorer
             {
                 {
                     GoPrevBtn,
-                    new Bitmap(Image.FromFile("Resources/Icons/ic_fluent_arrow_left_24_filled.png"), new Size(30, 30))
-                },
-                {
-                    GoNextBtn,
-                    new Bitmap(Image.FromFile("Resources/Icons/ic_fluent_arrow_right_24_filled.png"), new Size(30, 30))
+                    new Bitmap(Image.FromFile("Resources/Icons/ic_fluent_arrow_left_24_filled.png"), new Size(25, 25))
                 },
                 {
                     InfoBtn,
-                    new Bitmap(Image.FromFile("Resources/Icons/ic_fluent_info_24_filled.png"), new Size(15, 15))
-                },
-                {
-                    GoBtn,
-                    new Bitmap(Image.FromFile("Resources/Icons/ic_fluent_chevron_right_24_filled.png"),
-                        new Size(30, 30))
+                    new Bitmap(Image.FromFile("Resources/Icons/ic_fluent_info_24_filled.png"), new Size(30, 30))
                 }
             });
 
@@ -82,7 +73,6 @@ namespace Icxplorer
                 if (Directory.EnumerateDirectories(d.FullName).ToList().Count > 0) fNode.Nodes.Add("");
                 e.Node.Nodes.Add(fNode);
             });
-            dir.GetDirectories().Select(d => d.Name).ToList().ForEach(d => DirView.Items.Add(d, "FolderIcon"));
             dir.GetFiles().ToList().ForEach(f => DirView.Items.Add(f.Name, "DocIcon"));
             _currentPath = PathBox.Text = e.Node.FullPath.Replace(@":\\", @":\");
         }
@@ -90,37 +80,59 @@ namespace Icxplorer
         private void PathTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             var dir = new DirectoryInfo(e.Node.FullPath);
+            DirView.Clear();
+            dir.GetFiles().ToList().ForEach(f =>
+                DirView.Items.Add(f.Name, "DocIcon"));
             dir.GetDirectories().Where(d => d.Parent == dir).ToList().ForEach(d =>
             {
                 if (d.Attributes.HasFlag(FileAttributes.Hidden)) return;
                 if (Directory.EnumerateDirectories(d.FullName).ToList().Count > 0) PathTree.SelectedNode.Expand();
-                else DirView.Clear();
                 _currentPath = PathBox.Text = e.Node.FullPath.Replace(@":\\", @":\");
             });
         }
-        
-        //TODO: 修复在点击侧面板后，点击右侧信息图标后左侧失去焦点会无法获得真实路径的问题
+
         private void DirView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var item = DirView.SelectedItems[0];
-            if (item.ImageKey == @"FolderIcon")
+            try
             {
-                var path = PathTree.SelectedNode.FullPath;
-                _currentPath = PathBox.Text = Path.Combine(path, item.Text);
-                //expand level by level from root to current node
-                var currentNode = PathTree.Nodes;
-                var pathList = _currentPath.Split('\\').ToList();
-                pathList.ForEach(p =>
-                {
-                    var subNode = currentNode.Find(p, false);
-                    if (subNode.Length == 1) subNode[0].Expand();
-                    currentNode = currentNode[0].Nodes;
-                });
+                Process.Start(Path.Combine(_currentPath, item.Text));
             }
-            else
+            catch (Exception ex)
             {
-                Process.Start(Path.Combine(PathTree.SelectedNode.FullPath, item.Text));
+                MessageBox.Show($@"尝试打开文件时出错: {ex.Message}", @"错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+        
+        private void GoPrevBtn_Click(object sender, EventArgs e)
+        {
+            if (PathTree.SelectedNode.Parent == null) return;
+            PathTree.SelectedNode = PathTree.SelectedNode.Parent;
+            var dir = new DirectoryInfo(PathTree.SelectedNode.FullPath);
+            DirView.Clear();
+            dir.GetFiles().ToList().ForEach(f => DirView.Items.Add(f.Name, "DocIcon"));
+            _currentPath = PathBox.Text = PathTree.SelectedNode.FullPath.Replace(@":\\", @":\");
+        }
+        
+        private void GoBtn_Click(object sender, EventArgs e)
+        {
+            if (PathBox.Text == string.Empty) return;
+            if (PathBox.Text == _currentPath) return;
+            if (!Directory.Exists(PathBox.Text))
+            {
+                MessageBox.Show(@"路径不存在", @"错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            PathTree.SelectedNode = PathTree.Nodes.Find(PathBox.Text, true)[0];
+            var dir = new DirectoryInfo(PathTree.SelectedNode.FullPath);
+            DirView.Clear();
+            dir.GetFiles().ToList().ForEach(f => DirView.Items.Add(f.Name, "DocIcon"));
+            _currentPath = PathBox.Text = PathTree.SelectedNode.FullPath.Replace(@":\\", @":\");
+        }
+        
+        private void InfoBtn_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(@"Icxplorer 根据 GNU GPL v3 协议开源, BiDuang 2023", @"关于");
         }
     }
 }

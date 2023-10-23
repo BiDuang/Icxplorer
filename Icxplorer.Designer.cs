@@ -33,12 +33,10 @@ namespace Icxplorer
         private void InitializeComponent()
         {
             this.GoPrevBtn = new System.Windows.Forms.Button();
-            this.GoNextBtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.PathTree = new System.Windows.Forms.TreeView();
             this.PathBox = new System.Windows.Forms.TextBox();
             this.DirView = new System.Windows.Forms.ListView();
-            this.GoBtn = new System.Windows.Forms.Button();
             this.InfoBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
@@ -46,26 +44,21 @@ namespace Icxplorer
             // 
             // GoPrevBtn
             // 
-            this.GoPrevBtn.Location = new System.Drawing.Point(15, 15);
+            this.GoPrevBtn.Location = new System.Drawing.Point(30, 30);
+            this.GoPrevBtn.Margin = new System.Windows.Forms.Padding(6);
             this.GoPrevBtn.Name = "GoPrevBtn";
-            this.GoPrevBtn.Size = new System.Drawing.Size(80, 40);
+            this.GoPrevBtn.Size = new System.Drawing.Size(60, 80);
             this.GoPrevBtn.TabIndex = 0;
             this.GoPrevBtn.UseVisualStyleBackColor = true;
-            // 
-            // GoNextBtn
-            // 
-            this.GoNextBtn.Location = new System.Drawing.Point(101, 15);
-            this.GoNextBtn.Name = "GoNextBtn";
-            this.GoNextBtn.Size = new System.Drawing.Size(80, 40);
-            this.GoNextBtn.TabIndex = 1;
-            this.GoNextBtn.UseVisualStyleBackColor = true;
+            this.GoPrevBtn.Click += new System.EventHandler(this.GoPrevBtn_Click);
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.PathTree);
-            this.panel1.Location = new System.Drawing.Point(15, 61);
+            this.panel1.Location = new System.Drawing.Point(30, 122);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 370);
+            this.panel1.Size = new System.Drawing.Size(400, 699);
             this.panel1.TabIndex = 2;
             // 
             // PathTree
@@ -73,71 +66,68 @@ namespace Icxplorer
             this.PathTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PathTree.FullRowSelect = true;
             this.PathTree.Location = new System.Drawing.Point(0, 0);
+            this.PathTree.Margin = new System.Windows.Forms.Padding(6);
             this.PathTree.Name = "PathTree";
-            this.PathTree.Size = new System.Drawing.Size(200, 370);
+            this.PathTree.Size = new System.Drawing.Size(400, 699);
             this.PathTree.TabIndex = 0;
             this.PathTree.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.PathTree_AfterExpand);
             this.PathTree.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.PathTree_NodeMouseDoubleClick);
             // 
             // PathBox
             // 
-            this.PathBox.Location = new System.Drawing.Point(241, 15);
+            this.PathBox.Location = new System.Drawing.Point(482, 30);
+            this.PathBox.Margin = new System.Windows.Forms.Padding(6);
             this.PathBox.Name = "PathBox";
-            this.PathBox.Size = new System.Drawing.Size(466, 21);
+            this.PathBox.Size = new System.Drawing.Size(928, 35);
             this.PathBox.TabIndex = 3;
             // 
             // DirView
             // 
             this.DirView.HideSelection = false;
-            this.DirView.Location = new System.Drawing.Point(241, 61);
+            this.DirView.Location = new System.Drawing.Point(482, 122);
+            this.DirView.Margin = new System.Windows.Forms.Padding(6);
             this.DirView.MultiSelect = false;
             this.DirView.Name = "DirView";
-            this.DirView.Size = new System.Drawing.Size(547, 370);
+            this.DirView.Size = new System.Drawing.Size(928, 699);
             this.DirView.TabIndex = 4;
             this.DirView.UseCompatibleStateImageBehavior = false;
             this.DirView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DirView_MouseDoubleClick);
             // 
-            // GoBtn
-            // 
-            this.GoBtn.Location = new System.Drawing.Point(713, 15);
-            this.GoBtn.Name = "GoBtn";
-            this.GoBtn.Size = new System.Drawing.Size(75, 40);
-            this.GoBtn.TabIndex = 5;
-            this.GoBtn.UseVisualStyleBackColor = true;
-            // 
             // InfoBtn
             // 
-            this.InfoBtn.Location = new System.Drawing.Point(187, 15);
+            this.InfoBtn.Location = new System.Drawing.Point(102, 30);
+            this.InfoBtn.Margin = new System.Windows.Forms.Padding(6);
             this.InfoBtn.Name = "InfoBtn";
-            this.InfoBtn.Size = new System.Drawing.Size(28, 40);
+            this.InfoBtn.Size = new System.Drawing.Size(328, 80);
             this.InfoBtn.TabIndex = 6;
             this.InfoBtn.UseVisualStyleBackColor = true;
+            this.InfoBtn.Click += new System.EventHandler(this.InfoBtn_Click);
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(241, 39);
+            this.label1.Location = new System.Drawing.Point(482, 78);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(466, 16);
+            this.label1.Size = new System.Drawing.Size(932, 32);
             this.label1.TabIndex = 7;
             this.label1.Text = "地址栏";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Icxplorer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1444, 836);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.InfoBtn);
-            this.Controls.Add(this.GoBtn);
             this.Controls.Add(this.DirView);
             this.Controls.Add(this.PathBox);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.GoNextBtn);
             this.Controls.Add(this.GoPrevBtn);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(816, 489);
-            this.MinimumSize = new System.Drawing.Size(816, 489);
+            this.MaximumSize = new System.Drawing.Size(1606, 907);
+            this.MinimumSize = new System.Drawing.Size(1470, 907);
             this.Name = "Icxplorer";
             this.Text = "Icxplorer";
             this.panel1.ResumeLayout(false);
@@ -151,14 +141,12 @@ namespace Icxplorer
 
         private System.Windows.Forms.TextBox PathBox;
         private System.Windows.Forms.ListView DirView;
-        private System.Windows.Forms.Button GoBtn;
 
         private System.Windows.Forms.TreeView PathTree;
 
         private System.Windows.Forms.Panel panel1;
 
         private System.Windows.Forms.Button GoPrevBtn;
-        private System.Windows.Forms.Button GoNextBtn;
 
         #endregion
     }
